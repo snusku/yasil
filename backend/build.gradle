@@ -11,6 +11,10 @@ repositories {
     mavenCentral()
 }
 
+javadoc{
+    options.showAll() //remove this on release builds
+}
+
 sourceSets{
     main{
         java{

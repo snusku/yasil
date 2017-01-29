@@ -5,10 +5,14 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 
-sourceCompatibility = 1.5
+sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+}
+
+javadoc{
+    options.showAll() //remove this on release builds
 }
 
 sourceSets{

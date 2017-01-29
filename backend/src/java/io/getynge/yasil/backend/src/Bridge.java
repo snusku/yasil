@@ -18,11 +18,13 @@ public class Bridge extends ABridge<String, String>{
 
     @Override
     public void start(boolean interactive) throws IllegalStateException {
+        parser.start(interactive);
+        executor.start();
         if(interactive){
            while(toRead.hasNext()){
                for(String i : receiveOutputFromExecutor) toWrite.println(i);
                String token = toRead.next();
-               
+
                if(!token.toLowerCase().equals("quit")) {
                    sendSourceToParser.send(token);
                }else{

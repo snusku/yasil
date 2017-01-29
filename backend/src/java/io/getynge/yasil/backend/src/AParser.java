@@ -13,7 +13,7 @@ package io.getynge.yasil.backend.src;
  * @see AExecutor
  * @see ASenderReceiverPair
  */
-abstract class AParser<SourceType, IDType, LocationType, NameType, RawSourceType> {
+abstract class AParser<SourceType, IDType, LocationType, NameType, RawSourceType>{
     ISender<SourceType> sendSourceToExecutor;
     ISender<IDType> sendIDToExecutor;
     IReceiver<LocationType> getLocationFromExecutor;

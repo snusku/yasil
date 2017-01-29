@@ -36,6 +36,7 @@ public class Bridge extends ABridge<String, String>{
                 String token = toRead.next();
                 sendSourceToParser.send(token);
             }
+
         }
     }
 

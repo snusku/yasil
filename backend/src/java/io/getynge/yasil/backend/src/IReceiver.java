@@ -1,5 +1,7 @@
 package io.getynge.yasil.backend.src;
 
+import java.util.Iterator;
+
 /**
  * Represents the receiving end of a one-way connection
  * There should NEVER be an instance of IReceiver that does not have a corresponding sender
@@ -11,4 +13,7 @@ package io.getynge.yasil.backend.src;
  * @see ISender
  * @see ASenderReceiverPair
  */
-interface IReceiver<T> extends Iterable<T>{}
+interface IReceiver<T> {
+    boolean hasNext();
+    T next();
+}

@@ -27,4 +27,5 @@ abstract class AExecutor<LocationType, NameType, OutputType, SourceType, IDType,
     IStateManager<LocationType, ResultType> stateManager;
 
     abstract void start();
+    abstract void stop();
 }

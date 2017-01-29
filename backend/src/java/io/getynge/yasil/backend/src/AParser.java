@@ -21,4 +21,5 @@ abstract class AParser<SourceType, IDType, LocationType, NameType, RawSourceType
     IReceiver<RawSourceType> getSourceFromBridge;
 
     abstract void start(boolean interactive);
+    abstract void stop();
 }

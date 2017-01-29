@@ -7,8 +7,8 @@ import java.util.Scanner;
  * Created by spark on 1/29/2017.
  */
 public class Bridge extends ABridge<String, String>{
-    Scanner toRead;
-    PrintWriter toWrite;
+    private Scanner toRead;
+    private PrintWriter toWrite;
 
     @Override
     public void connect(InputStream in, OutputStream out) throws IOException {
@@ -22,11 +22,10 @@ public class Bridge extends ABridge<String, String>{
         executor.start();
         if(interactive){
            while(toRead.hasNext()){
-               for(String i : receiveOutputFromExecutor) toWrite.println(i);
                String token = toRead.next();
-
                if(!token.toLowerCase().equals("quit")) {
                    sendSourceToParser.send(token);
+                   while(receiveOutputFromExecutor.hasNext()) toWrite.println(receiveOutputFromExecutor.next());
                }else{
                    break;
                }
@@ -36,8 +35,11 @@ public class Bridge extends ABridge<String, String>{
                 String token = toRead.next();
                 sendSourceToParser.send(token);
             }
-
+            while(receiveOutputFromExecutor.hasNext()) toWrite.println(receiveOutputFromExecutor.next());
         }
+
+        toRead.close();
+        toWrite.close();
     }
 
     Bridge(AParser<?, ?, ?, ?, String> a, AExecutor<?, ?, String, ?, ?, ?> b, ASenderReceiverPair<String> c, ASenderReceiverPair<String> d){

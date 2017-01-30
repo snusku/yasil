@@ -1,6 +1,9 @@
 package io.getynge.yasil.backend.src;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 /**
@@ -16,10 +19,15 @@ public class Bridge extends ABridge<String, String>{
         toWrite = new PrintWriter(out);
     }
 
+
+
     @Override
     public void start(boolean interactive) throws IllegalStateException {
-        parser.start(interactive);
-        executor.start();
+        Thread pThread = new Thread(()->parser.start(interactive));
+        Thread eThread = new Thread(()->executor.start());
+
+        pThread.start();
+        eThread.start();
         if(interactive){
            while(toRead.hasNext()){
                String token = toRead.next();
@@ -38,8 +46,21 @@ public class Bridge extends ABridge<String, String>{
             while(receiveOutputFromExecutor.hasNext()) toWrite.println(receiveOutputFromExecutor.next());
         }
 
+        parser.stop();
+        executor.stop();
         toRead.close();
         toWrite.close();
+
+        try {
+            pThread.join();
+            eThread.join();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+            System.err.println("ERROR JOINING PARSER AND EXECUTOR, FORCE ABORTING");
+            System.err.println("PROGRAM STATE MAY BE POISONED, DO NOT CONTINUE");
+            throw new IllegalStateException("Poisoned state");
+        }
+
     }
 
     Bridge(AParser<?, ?, ?, ?, String> a, AExecutor<?, ?, String, ?, ?, ?> b, ASenderReceiverPair<String> c, ASenderReceiverPair<String> d){

@@ -32,6 +32,7 @@ interface IFlag {
     IFlag willCall();
 
     /**
+     * @deprecated does nothing in our current setup
      * @return this
      */
     IFlag willClose();

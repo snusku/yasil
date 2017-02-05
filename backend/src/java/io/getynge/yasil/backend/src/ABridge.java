@@ -17,8 +17,8 @@ import java.io.OutputStream;
  * @see ASenderReceiverPair
  */
 public abstract class ABridge<RawSourceType, OutputType> {
-    AParser<?, ?, ?, ?, RawSourceType> parser;
-    AExecutor<?, ?, OutputType, ?, ?, ?> executor;
+    AParser<?, ?, ?, RawSourceType> parser;
+    AExecutor<?, ?, OutputType, ?, ?> executor;
     ISender<RawSourceType> sendSourceToParser;
     IReceiver<OutputType> receiveOutputFromExecutor;
 
